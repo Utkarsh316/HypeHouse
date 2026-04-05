@@ -17,6 +17,21 @@ function Navbar() {
       <span style={{ cursor: "pointer" }} onClick={logout}>
         Logout
       </span>
+
+      <span
+      style={{ marginLeft: "20px", cursor: "pointer" }}
+      onClick={() => navigate("/create-event")}
+    >
+      Create Event
+    </span>
+
+     <span
+      style={{ marginRight: "20px", cursor: "pointer" }}
+      onClick={() => navigate("/my-events")}
+    >
+      My Events
+    </span>
+
     </div>
   );
 }
