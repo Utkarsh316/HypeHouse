@@ -37,8 +37,9 @@ router.get("/", async (req, res) => {
         res.json(events);
  
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
-    }
+  console.error("FETCH EVENTS ERROR:", error); // 👈 ADD THIS
+  res.status(500).json({ message: "Server error" });
+}
 });
 
 // JOIN EVENT
