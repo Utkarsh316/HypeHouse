@@ -5,34 +5,49 @@ function Navbar() {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     navigate("/");
   };
 
   return (
-    <div style={{ background: "black", color: "white", padding: "10px" }}>
-      <span style={{ marginRight: "20px", cursor: "pointer" }} onClick={() => navigate("/events")}>
-        Events
-      </span>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-3 py-2">
+      <div className="container-fluid">
+        <button
+          className="navbar-brand btn btn-link text-white text-decoration-none fw-bold fs-4 p-0"
+          onClick={() => navigate("/events")}
+          style={{ border: "none" }}
+        >
+          HypeHouse
+        </button>
 
-      <span style={{ cursor: "pointer" }} onClick={logout}>
-        Logout
-      </span>
+        <div className="d-flex align-items-center gap-2 ms-auto flex-wrap">
+          <button
+            className="btn btn-outline-light btn-sm"
+            onClick={() => navigate("/events")}
+          >
+            Events
+          </button>
 
-      <span
-      style={{ marginLeft: "20px", cursor: "pointer" }}
-      onClick={() => navigate("/create-event")}
-    >
-      Create Event
-    </span>
+          <button
+            className="btn btn-outline-light btn-sm"
+            onClick={() => navigate("/create-event")}
+          >
+            Create Event
+          </button>
 
-     <span
-      style={{ marginRight: "20px", cursor: "pointer" }}
-      onClick={() => navigate("/my-events")}
-    >
-      My Events
-    </span>
+          <button
+            className="btn btn-outline-light btn-sm"
+            onClick={() => navigate("/my-events")}
+          >
+            My Events
+          </button>
 
-    </div>
+          <button className="btn btn-danger btn-sm" onClick={logout}>
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
   );
 }
 

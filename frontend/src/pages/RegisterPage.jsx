@@ -8,12 +8,14 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const registerUser = async () => {
+  const registerUser = async (e) => {
+    e.preventDefault();
+
     try {
       await axios.post("http://localhost:5000/api/auth/register", {
         name,
         email,
-        password
+        password,
       });
 
       alert("Registered successfully!");
@@ -24,23 +26,58 @@ function RegisterPage() {
   };
 
   return (
-    <div style={{ padding: "50px" }}>
-      <h1>Register</h1>
+    <div className="container d-flex align-items-center justify-content-center vh-100">
+      <div className="card shadow-lg p-4 border-0" style={{ width: "420px" }}>
+        
+        <h2 className="text-center mb-4">Create Account 🚀</h2>
 
-      <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
-      <br /><br />
+        <form onSubmit={registerUser}>
+          <div className="mb-3">
+            <label className="form-label">Name</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <br /><br />
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <br /><br />
+          <div className="mb-4">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Create a password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-      <button onClick={registerUser}>Register</button>
+          <button type="submit" className="btn btn-success w-100">
+            Register
+          </button>
+        </form>
 
-      <p onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-        Already have an account? Login
-      </p>
+        <p
+          className="text-center mt-3 text-muted"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/")}
+        >
+          Already have an account? Login
+        </p>
+      </div>
     </div>
   );
 }

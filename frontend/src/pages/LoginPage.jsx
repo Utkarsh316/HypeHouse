@@ -7,11 +7,13 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const loginUser = async () => {
+  const loginUser = async (e) => {
+    e.preventDefault();
+
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", {
         email,
-        password
+        password,
       });
 
       localStorage.setItem("token", res.data.token);
@@ -19,27 +21,53 @@ function LoginPage() {
 
       alert("Login successful!");
       navigate("/events");
-
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div style={{ padding: "50px" }}>
-      <h1>Login</h1>
+    <div className="container d-flex align-items-center justify-content-center vh-100">
+      <div className="card shadow-lg p-4 border-0" style={{ width: "400px" }}>
+        
+        <h2 className="text-center mb-4">Welcome! 👋</h2>
 
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <br /><br />
+        <form onSubmit={loginUser}>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <br /><br />
+          <div className="mb-4">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-      <button onClick={loginUser}>Login</button>
+          <button type="submit" className="btn btn-primary w-100">
+            Login
+          </button>
+        </form>
 
-      <p onClick={() => navigate("/register")} style={{ cursor: "pointer" }}>
-        Don’t have an account? Register
-      </p>
+        <p
+          className="text-center mt-3 text-muted"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/register")}
+        >
+          Don’t have an account? Register
+        </p>
+      </div>
     </div>
   );
 }

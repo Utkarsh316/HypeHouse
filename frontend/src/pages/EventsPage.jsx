@@ -39,6 +39,48 @@ function EventsPage() {
 };
 
 
+const deleteEvent = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.delete(`http://localhost:5000/api/events/${id}`, {
+      headers: {
+        Authorization: token
+      }
+    });
+
+    alert("Event deleted");
+
+    // refresh list
+    fetchEvents();
+
+  } catch (error) {
+    alert(error.response?.data?.message || "Error");
+  }
+};
+
+
+const leaveEvent = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.post(
+      `http://localhost:5000/api/events/leave/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+
+    alert("Left event");
+    fetchEvents();
+
+  } catch (error) {
+    alert(error.response?.data?.message || "Error");
+  }
+};
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -54,35 +96,57 @@ function EventsPage() {
     <>
       <Navbar />
 
-      <div style={{ padding: "20px" }}>
+      <div className="container mt-4">
         <h1>All Events</h1>
 
-        {events.map((event) => (
-          <div
-            key={event._id}
-            style={{
-              border: "1px solid white",
-              margin: "10px",
-              padding: "10px"
-            }}
-          >
-            <h3>{event.title}</h3>
-            <p>{event.description}</p>
-            <p>{event.location}</p>
-            <p>{new Date(event.date).toDateString()}</p>
-            <p>Attendees: {event.attendees.length}</p>
-
-       <button
-      onClick={() => joinEvent(event._id)}
-      disabled={event.attendees.includes(localStorage.getItem("userId"))}
+{events.map((event) => (
+  <div className="card shadow-sm p-4 mb-4" key={event._id}>
+    
+    <h3
+      style={{ cursor: "pointer", color: "#0d6efd" }}
+      onClick={() => navigate(`/event/${event._id}`)}
     >
-      {event.attendees.includes(localStorage.getItem("userId"))
-        ? "Already Joined"
-        : "Join Event"}
-    </button>
+      {event.title}
+    </h3>
 
-          </div>
-        ))}
+    <p className="text-muted">{event.description}</p>
+
+    <p><b>📍 Location:</b> {event.location}</p>
+    <p><b>📅 Date:</b> {new Date(event.date).toDateString()}</p>
+    <p><b>👥 Attendees:</b> {event.attendees.length}</p>
+
+    <div className="d-flex justify-content-between align-items-center mt-3">
+
+      <div className="d-flex gap-2">
+        {event.attendees.includes(localStorage.getItem("userId")) ? (
+          <button
+            className="btn btn-warning"
+            onClick={() => leaveEvent(event._id)}
+          >
+            Leave
+          </button>
+        ) : (
+          <button
+            className="btn btn-primary"
+            onClick={() => joinEvent(event._id)}
+          >
+            Join
+          </button>
+        )}
+
+        {event.createdBy === localStorage.getItem("userId") && (
+          <button
+            className="btn btn-danger"
+            onClick={() => deleteEvent(event._id)}
+          >
+            Delete
+          </button>
+        )}
+      </div>
+
+    </div>
+  </div>
+))}
       </div>
     </>
   );

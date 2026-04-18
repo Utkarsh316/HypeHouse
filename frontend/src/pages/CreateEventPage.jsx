@@ -8,10 +8,11 @@ function CreateEventPage() {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
-
   const navigate = useNavigate();
 
-  const createEvent = async () => {
+  const createEvent = async (e) => {
+    e.preventDefault();
+
     try {
       const token = localStorage.getItem("token");
 
@@ -25,11 +26,10 @@ function CreateEventPage() {
         }
       );
 
-      alert("Event created!");
+      alert("Event created successfully!");
       navigate("/events");
-
     } catch (error) {
-      alert(error.response?.data?.message || "Error");
+      alert(error.response?.data?.message || "Error creating event");
     }
   };
 
@@ -37,22 +37,69 @@ function CreateEventPage() {
     <>
       <Navbar />
 
-      <div style={{ padding: "20px" }}>
-        <h1>Create Event</h1>
+      <div className="container mt-5" style={{ maxWidth: "700px" }}>
+        <div className="card shadow-lg border-0 p-4">
+          <h2 className="mb-4 text-center">Create Event</h2>
 
-        <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
-        <br /><br />
+          <form onSubmit={createEvent}>
+            <div className="mb-3">
+              <label className="form-label">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter event title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
 
-        <input placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
-        <br /><br />
+            <div className="mb-3">
+              <label className="form-label">Description</label>
+              <textarea
+                className="form-control"
+                rows="4"
+                placeholder="Enter event description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
 
-        <input type="date" onChange={(e) => setDate(e.target.value)} />
-        <br /><br />
+            <div className="mb-3">
+              <label className="form-label">Date</label>
+              <input
+                type="date"
+                className="form-control"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
 
-        <input placeholder="Location" onChange={(e) => setLocation(e.target.value)} />
-        <br /><br />
+            <div className="mb-4">
+              <label className="form-label">Location</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter event location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </div>
 
-        <button onClick={createEvent}>Create Event</button>
+            <div className="d-flex gap-2 justify-content-end">
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => navigate("/events")}
+              >
+                Cancel
+              </button>
+
+              <button type="submit" className="btn btn-primary">
+                Create Event
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
