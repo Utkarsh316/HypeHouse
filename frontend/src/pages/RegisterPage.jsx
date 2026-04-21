@@ -12,7 +12,7 @@ function RegisterPage() {
     e.preventDefault();
 
     try {
-      await axios.post("http://hypehouse.onrender.com/api/auth/register", {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
         name,
         email,
         password,

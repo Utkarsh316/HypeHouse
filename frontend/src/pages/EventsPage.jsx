@@ -9,7 +9,7 @@ function EventsPage() {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/events");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/events`);
       setEvents(res.data);
     } catch (error) {
       console.log(error);
@@ -21,7 +21,7 @@ function EventsPage() {
     const token = localStorage.getItem("token");
 
     await axios.post(
-      `http://localhost:5000/api/events/join/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/events/join/${id}`,
       {},
       {
         headers: {
@@ -43,7 +43,7 @@ const deleteEvent = async (id) => {
   try {
     const token = localStorage.getItem("token");
 
-    await axios.delete(`http://localhost:5000/api/events/${id}`, {
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/events/${id}`, {
       headers: {
         Authorization: token
       }
@@ -65,7 +65,7 @@ const leaveEvent = async (id) => {
     const token = localStorage.getItem("token");
 
     await axios.post(
-      `http://hypehouse.onrender.com/api/events/leave/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/events/leave/${id}`,
       {},
       {
         headers: {

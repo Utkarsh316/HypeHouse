@@ -9,7 +9,7 @@ function MyEventsPage() {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("http://hypehouse.onrender.com/api/events");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/events`);
       const userId = localStorage.getItem("userId");
 
       const myEvents = res.data.filter(

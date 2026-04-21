@@ -17,7 +17,7 @@ function CreateEventPage() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://hypehouse.onrender.com/api/events/create",
+        `${import.meta.env.VITE_API_URL}/api/events/create`,
         { title, description, date, location },
         {
           headers: {
