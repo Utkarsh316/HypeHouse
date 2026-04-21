@@ -65,7 +65,7 @@ const leaveEvent = async (id) => {
     const token = localStorage.getItem("token");
 
     await axios.post(
-      `http://localhost:5000/api/events/leave/${id}`,
+      `http://hypehouse.onrender.com/api/events/leave/${id}`,
       {},
       {
         headers: {
