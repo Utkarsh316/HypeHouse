@@ -19,7 +19,7 @@ function RegisterPage() {
       });
 
       alert("Registered successfully!");
-      navigate("/");
+      navigate("/events");
     } catch (error) {
       alert(error.response?.data?.message || "Error");
     }
