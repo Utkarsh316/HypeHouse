@@ -9,6 +9,9 @@ function CreateEventPage() {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const navigate = useNavigate();
+  const [capacity, setCapacity] = useState("");
+  const [price, setPrice] = useState(0);
+  const [type, setType] = useState("free");
 
   const createEvent = async (e) => {
     e.preventDefault();
@@ -18,7 +21,14 @@ function CreateEventPage() {
 
       await axios.post(
         `${import.meta.env.VITE_API_URL}/api/events/create`,
-        { title, description, date, location },
+        { 
+    title, 
+    description, 
+    date, 
+    location,
+    capacity: Number(capacity),   // ✅ HERE
+    price: Number(price)          // ✅ HERE
+  },
         {
           headers: {
             Authorization: token,
@@ -84,6 +94,49 @@ function CreateEventPage() {
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
+            {/* Capacity */}
+            <div className="mb-3">
+              <label className="form-label">Capacity</label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter max attendees"
+                value={capacity}
+                onChange={(e) => setCapacity(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* Event Type */}
+            <div className="mb-3">
+              <label className="form-label">Event Type</label>
+              <select
+                className="form-control"
+                value={type}
+                onChange={(e) => {
+                  setType(e.target.value);
+                  if (e.target.value === "free") setPrice(0);
+                }}
+              >
+                <option value="free">Free</option>
+                <option value="paid">Paid (Contribution)</option>
+              </select>
+            </div>
+
+            {/* Price (only if paid) */}
+            {type === "paid" && (
+              <div className="mb-3">
+                <label className="form-label">Price (₹)</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Enter price"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                />
+              </div>
+            )}
 
             <div className="d-flex gap-2 justify-content-end">
               <button
