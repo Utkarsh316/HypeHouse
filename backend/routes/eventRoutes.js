@@ -4,16 +4,27 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// CREATE EVENT
+//Create Event
 router.post("/create", authMiddleware, async (req, res) => {
     try {
-        const { title, description, date, location } = req.body;
+        const { title, description, date, location, capacity, price } = req.body;
+
+        // 🔥 validation
+        if (!capacity || capacity <= 0) {
+            return res.status(400).json({ message: "Capacity must be greater than 0" });
+        }
+
+        if (price < 0) {
+            return res.status(400).json({ message: "Price cannot be negative" });
+        }
 
         const event = new Event({
             title,
             description,
             date,
             location,
+            capacity,   
+            price: price || 0,     
             createdBy: req.user.id
         });
 
@@ -25,10 +36,10 @@ router.post("/create", authMiddleware, async (req, res) => {
         });
 
     } catch (error) {
+        console.log(error); // 👈 add this for debugging
         res.status(500).json({ message: "Server error" });
     }
 });
-
 // GET ALL EVENTS (sorted by date)
 router.get("/", async (req, res) => {
     try {

@@ -19,14 +19,29 @@ const eventSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+         required: true
     },
-    attendees: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        }
-    ]
+    capacity: {
+  type: Number,
+  required: true,
+  min: 1
+},
+
+price: {
+  type: Number,
+  default: 0,
+  min: 0
+},
+ attendees: {
+  type: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ],
+  default: []
+}
 }, { timestamps: true });
 
 export default mongoose.model("Event", eventSchema);
