@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 const styles = `
@@ -307,7 +306,7 @@ function MyEventsPage() {
     <>
       <style>{styles}</style>
       <div className="mep-page">
-        <Navbar />
+
 
         {/* Hero */}
         <div className="mep-hero">

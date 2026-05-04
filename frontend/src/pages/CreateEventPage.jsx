@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import toast from "react-hot-toast";
 
 
 
@@ -48,10 +48,12 @@ export default function CreateEventPage() {
         },
         { headers: { Authorization: token } }
       );
-      alert("Event created successfully!");
-      navigate("/events");
+      toast.success("Event created successfully!");
+      setTimeout(() => {
+        navigate("/events");
+      }, 800);
     } catch (error) {
-      alert(error.response?.data?.message || "Error creating event");
+      toast.error(error.response?.data?.message || "Error creating event");
     } finally {
       setLoading(false);
     }
@@ -65,8 +67,7 @@ export default function CreateEventPage() {
         rel="stylesheet"
       />
 
-      <Navbar />
-
+      
       {/* ── Page shell ── */}
       <div style={S.page}>
         {/* Ambient blobs */}

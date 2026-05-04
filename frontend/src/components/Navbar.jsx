@@ -293,7 +293,7 @@ export default function Navbar() {
             onClick={() => navigate("/")}
             aria-label="HypeHouse home"
           >
-            <div style={styles.logoIcon}>🎉</div>
+            <div style={styles.logoIcon}>⚡</div>
             <span style={styles.logoText}>HypeHouse</span>
           </button>
 

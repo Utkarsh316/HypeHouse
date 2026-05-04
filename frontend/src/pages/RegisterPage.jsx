@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
 /* ─────────────────────────────────────────────
    HypeHouse · Register Page
    Design: Mirror of LoginPage split layout —
@@ -30,10 +30,12 @@ export default function RegisterPage() {
         email,
         password,
       });
-      alert("Registered successfully!");
-      navigate("/events");
+      toast.success("Registered successfully!");
+      setTimeout(() => {
+        navigate("/events");
+      }, 800);
     } catch (error) {
-      alert(error.response?.data?.message || "Error");
+      toast.error(error.response?.data?.message || "Error");
     } finally {
       setLoading(false);
     }

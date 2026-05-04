@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import toast from "react-hot-toast";
 
 const BUBBLE_COLORS = [
   "#FF3CAC","#784BA0","#2B86C5","#38EF7D","#F7971E",
@@ -323,10 +323,13 @@ function EventDetailsPage() {
       await axios.delete(`${import.meta.env.VITE_API_URL}/api/events/${id}`, {
         headers: { Authorization: token },
       });
-      alert("Event deleted");
-      navigate("/events");
+      toast.success("Event deleted 🗑️");
+      
+        setTimeout(() => {
+          navigate("/events");
+        }, 800);
     } catch (error) {
-      alert(error.response?.data?.message || "Error");
+      toast.error(error.response?.data?.message || "Error");
     }
   };
 
@@ -339,7 +342,7 @@ function EventDetailsPage() {
       <>
         <style>{styles}</style>
         <div className="hed-page">
-          <Navbar />
+  
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "60vh", color: "rgba(255,255,255,.4)", fontFamily: "'Syne',sans-serif", fontWeight: 700 }}>
             Loading…
           </div>
@@ -368,7 +371,7 @@ function EventDetailsPage() {
     <>
       <style>{styles}</style>
       <div className="hed-page">
-        <Navbar />
+  
 
         {/* ── HERO ── */}
         <div className="hed-hero">

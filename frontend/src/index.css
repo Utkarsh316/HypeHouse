@@ -52,6 +52,8 @@
 
 body {
   margin: 0;
+  background: #080412; 
+  min-height: 100vh; 
 }
 
 #root {

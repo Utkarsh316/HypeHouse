@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
 /* ─────────────────────────────────────────────
    HypeHouse · Login Page
    Design: Full-screen split — left animated
@@ -28,10 +28,12 @@ export default function LoginPage() {
       );
       localStorage.setItem("token",  res.data.token);
       localStorage.setItem("userId", res.data.user.id);
-      alert("Login successful!");
-      navigate("/events");
+      toast.success("Welcome back 👋");
+        setTimeout(() => {
+          navigate("/events");
+        }, 800);
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }

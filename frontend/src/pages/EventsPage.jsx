@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 /* ─────────────────────────────────────────────
@@ -103,7 +102,7 @@ export default function EventsPage() {
         rel="stylesheet"
       />
 
-      <Navbar />
+
 
       <div style={S.page}>
         {/* ── Ambient orbs ── */}
